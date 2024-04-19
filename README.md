@@ -1,10 +1,10 @@
 # 📈 Nasdaq-Closing-Price-Prediction-Challenge: An Optiver Case Study
 
-## Abstract 🎯
-This project aims to develop a sophisticated model capable of predicting the closing price movements of Nasdaq-listed stocks during the final critical ten minutes of the trading day. By integrating and analyzing data from both the order book and closing auctions, the model will leverage insights into the nuanced supply and demand dynamics to forecast price movements and identify lucrative trading opportunities. The predictive performance of the model will be measured using the Mean Absolute Error (MAE) between predicted and observed stock closing prices.
+### Abstract 🎯
+This project aims to develop a sophisticated model capable of predicting the closing price movements of Nasdaq-listed stocks during the critical final ten minutes of the trading day. By integrating and analyzing data from both the order book and closing auctions, the model leverages insights into nuanced supply and demand dynamics to forecast price movements and identify lucrative trading opportunities. To enhance model performance, Optuna, an open-source optimization library, is utilized for the efficient and automatic tuning of hyperparameters. The predictive performance of the model is measured using the Mean Absolute Error (MAE) between predicted and observed stock closing prices.
 
-## Introduction 🚀
-Predicting stock market movements, especially in the volatile closing minutes, is a complex challenge that attracts significant attention from financial analysts and traders. The Nasdaq stock market, characterized by high liquidity and rapid price changes, presents a fertile ground for applying advanced predictive analytics. This project focuses on harnessing detailed order book data and closing auction information to build a model that not only predicts the closing prices but also uncovers potential trading strategies during peak trading times.
+### Introduction 🚀
+Predicting stock market movements, especially in the volatile closing minutes, is a complex challenge that attracts significant attention from financial analysts and traders. The Nasdaq stock market, characterized by high liquidity and rapid price changes, presents a fertile ground for applying advanced predictive analytics. This project focuses on harnessing detailed order book data and closing auction information to build a model that not only predicts the closing prices but also uncovers potential trading strategies during peak trading times. To optimize the model’s parameters, we employ Optuna, a sophisticated hyperparameter optimization framework. Optuna enhances the model development process through its support for several state-of-the-art algorithms, such as the Tree-structured Parzen Estimator (TPE), Categorical Algorithm for Numerical and Categorical Bayesian Optimization (CMA-ES), and Random Search, which facilitate efficient exploration and optimization of the hyperparameter space.
 
 ## Literature Review 📚
 - **Order Book Dynamics:** Research in financial markets often highlights the importance of order book data in understanding market microstructure. Studies like "A High-Frequency Trade Model for Financial Regulation" (J. Gatheral, 2010) provide insights into how order flow and depth can influence price movements.
@@ -122,7 +122,7 @@ The Nasdaq Closing Price Prediction Challenge encapsulates the complexity of fin
 
 ---
 
-Feel free to reach out for more insights or potential collaboration! 🤝 Happy trading and analyzing! 📊🚀
+Feel free to reach out at [adityasaxena@g.harvard.edu](mailto:adityasaxena@g.harvard.edu) for more insights or potential collaboration! 🤝 Happy trading and analyzing! 📊🚀
 
 ### PS: Helpful Resources
  - https://github.com/hyperopt/hyperopt
