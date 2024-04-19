@@ -114,8 +114,13 @@ This dataset contains historic data for the daily ten-minute closing auction on 
 
 For more details and to access the data, visit the [Kaggle competition dataset page](https://www.kaggle.com/competitions/optiver-trading-at-the-close/data). 📈🔍
 
+Certainly! Here's the revised "Results and Discussion" section formatted in Markdown:
+
 ## Results and Discussion 🔍
 The developed model's ability to predict closing prices with a minimized MAE indicates its effectiveness in capturing the essential dynamics of the Nasdaq market. The identification of key features from the order book and auction data that most significantly impact price movements offers insights into the critical factors driving last-minute price changes.
+
+- **Solution Notebook**: The development notebook for the model can be accessed in the repository:
+  - [optiver_dev_lgbm.ipynb](https://github.com/aditya-saxena-7/Nasdaq-Closing-Price-Prediction-Challenge-An-Optiver-Case-Study/blob/main/optiver_dev_lgbm.ipynb)
 
 ## Conclusion 🎓
 The Nasdaq Closing Price Prediction Challenge encapsulates the complexity of financial market predictions while showcasing the potential of advanced analytics in real-time trading environments. The project not only enhances understanding of market dynamics but also opens avenues for developing automated trading strategies that can operate efficiently in the frenetic closing moments of stock trading. The insights gained here extend beyond mere price prediction, suggesting broader applications in market theory and financial regulation.
