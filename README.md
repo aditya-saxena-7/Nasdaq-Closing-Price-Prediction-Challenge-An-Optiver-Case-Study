@@ -50,8 +50,6 @@ Tom Forbes, John Macgillivray, Matteo Pietrobon, Sohier Dane, Maggie Demkin. (20
 ### Dataset Description 🗃️
 This dataset contains historic data for the daily ten-minute closing auction on the NASDAQ stock exchange. Your challenge is to predict the future price movements of stocks relative to the price future price movement of a synthetic index composed of NASDAQ-listed stocks. 
 
-This is a forecasting competition using the time series API. The private leaderboard will be determined using real market data gathered after the submission period closes.
-
 **Files:**
 - **[train/test].csv:** The auction data. The test data will be delivered by the API.
   - `stock_id`: A unique identifier for the stock. Not all stock IDs exist in every time bucket.
