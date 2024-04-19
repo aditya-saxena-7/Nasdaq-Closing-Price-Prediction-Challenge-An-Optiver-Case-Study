@@ -84,7 +84,7 @@ The Nasdaq Closing Price Prediction Challenge encapsulates the complexity of fin
 
 Feel free to reach out for more insights or potential collaboration! 🤝 Happy trading and analyzing! 📊🚀
 
-### Helpful Resource
+### PS: Helpful Resources
  - https://github.com/hyperopt/hyperopt
  - https://github.com/autonomio/talos
  - https://towardsdatascience.com/a-guide-to-an-efficient-way-to-build-neural-network-architectures-part-i-hyper-parameter-8129009f131b
