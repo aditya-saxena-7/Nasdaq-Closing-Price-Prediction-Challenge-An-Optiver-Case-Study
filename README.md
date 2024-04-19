@@ -29,7 +29,7 @@ Predicting stock market movements, especially in the volatile closing minutes, i
 ### Submission Evaluation
 Submissions are evaluated on the Mean Absolute Error (MAE) between the predicted return and the observed target. The formula is given by:
 
-\[ MAE = \frac{1}{n} \sum_{i=1}^n |y_i - x_i| \]
+MAE = \frac{1}{n} \sum_{i=1}^n |y_i - x_i|
 
 Where:
 - `n` is the total number of data points.
