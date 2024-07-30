@@ -74,3 +74,6 @@ This dataset contains historic data for the daily ten-minute closing auction on 
   - `wap`: The weighted average price in the non-auction book.
   - `seconds_in_bucket`: The number of seconds elapsed since the beginning of the day's closing auction, always starting from 0.
   - `target`: The 60 second future move in the wap of the stock, less the 60 second future move of the synthetic index. Only provided for the train set.
+
+## Results and Discussion 🔍
+The developed model's ability to predict closing prices with a minimized MAE indicates its effectiveness in capturing the essential dynamics of the Nasdaq market. The identification of key features from the order book and auction data that most significantly impact price movements offers insights into the critical factors driving last-minute price changes.
