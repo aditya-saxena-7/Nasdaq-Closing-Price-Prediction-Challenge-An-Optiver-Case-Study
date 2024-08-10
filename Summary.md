@@ -13,7 +13,7 @@ The predictive performance of the model is measured using the Mean Absolute Erro
 ### 2. Introduction 🚀
 ---
 
-Predicting stock market movements, especially in the volatile closing minutes, is a complex challenge that attracts significant attention from financial analysts and traders. The Nasdaq stock market, characterized by high liquidity and rapid price changes, presents a fertile ground for applying advanced predictive analytics. 
+Predicting stock market movements, especially in the volatile closing minutes, is a complex challenge that attracts significant attention from financial analysts and traders.  
 
 This project focuses on harnessing detailed order book data and closing auction information to build a model that not only predicts the closing prices but also uncovers potential trading strategies during peak trading times. To optimize the model’s parameters, we employ Optuna, a sophisticated hyperparameter optimization framework. 
 
@@ -82,31 +82,31 @@ This dataset contains historic data for the daily ten-minute closing auction on 
 0 for no imbalance
 - **Context:** This indicator helps in predicting whether the price is likely to rise or fall at the close, based on whether there is excess buying pressure or selling pressure.
 
-**reference_price:**
-- **Description:** The price at which the number of paired shares is maximized, the imbalance is minimized, and the price is closest to the bid-ask midpoint.
-- **Context:** Acts as a pivotal price point for the model, as it represents a theoretically optimal trading price considering current market conditions.
-
 **matched_size:**
 - **Description:** The total amount in USD that can be matched at the current reference price.
 - **Context:** Indicates the volume of trades that can be executed without affecting the market price too significantly, crucial for understanding market liquidity.
 
 **far_price, near_price, [bid/ask]_price, [bid/ask]_size:**
+
 - **Description:** These are various price points and quantities in the order book.
+  
 Far price and near price likely relate to the prices available at further and closer points in the order book.
+
 [bid/ask]_price are the highest buy and lowest sell prices respectively.
+
 [bid/ask]_size are the volumes available at these prices.
+
 - **Context: These metrics provide detailed insights into the order book's depth and the distribution of buy and sell orders around the reference price, informing predictions on price movement pressures.
 
 **wap (Weighted Average Price):**
+
 - **Description:** Calculated over a specific time frame within the non-auction book, it's a price that reflects the average price at which stocks are traded, weighted by volume.
 - **Context:** WAP is used to gauge the average trading price over a period, often used in financial models to understand market trends and to normalize the impact of large trades on simple average price calculations.
 
-**seconds_in_bucket:**
-- **Description:** Measures the number of seconds since the start of the day’s closing auction, starting always from zero.
-- **Context:** Useful for models that need to understand and predict price movements and market behavior at very specific intervals during the closing auction.
-
 **target:**
+
 - **Description:** The difference between the 60-second future movement in the stock's WAP and the 60-second future movement of a synthetic index, provided only in the training set.
+
 - **Context:** Serves as the dependent variable in training the model. It represents the relative movement of a stock's price compared to the market, which is central to predicting future price movements effectively.
 
 ### 5. Model Development
@@ -144,12 +144,15 @@ Add 3 new features related imbalance_ratio, bid-size and ask-size.
 1. **New Feature: imbalance_ratio**
 
 - **Definition:** It is calculated as the division of imbalance_size by matched_size.
+  
 imbalance_size: This could represent the volume of shares that remain unmatched at the current reference price.
+
 - **matched_size:** This typically indicates the volume of shares that can be matched at the current reference price.
 
 **Significance of the imbalance_ratio Feature**
 
 - **Insight into Market Dynamics:** This ratio provides insight into the relative size of unmatched orders compared to matched orders at the reference price, potentially signaling market pressure (either buying or selling pressure) that isn't fully resolved by current order matches.
+  
 - **Indicator of Market Sentiment:** A high imbalance_ratio might suggest a strong imbalance in buy or sell orders that could affect the stock price shortly, especially during the closing auction when liquidity and volatility are high.
 
 2. **imbl_size1**
@@ -174,4 +177,3 @@ imbalance_size: This could represent the volume of shares that remain unmatched 
 The developed model's ability to predict closing prices with a minimized MAE indicates its effectiveness in capturing the essential dynamics of the Nasdaq market. 
 
 The identification of key features from the order book and auction data that most significantly impact price movements offers insights into the critical factors driving last-minute price changes.
-
