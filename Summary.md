@@ -105,9 +105,55 @@ Far price and near price likely relate to the prices available at further and cl
 
 **target:**
 
-- **Description:** The difference between the 60-second future movement in the stock's WAP and the 60-second future movement of a synthetic index, provided only in the training set.
+The target variable you're predicting is the difference between the 60-second future movement in a stock's Weighted Average Price (WAP) and the 60-second future movement of a synthetic index.
+What Does This Mean?
 
-- **Context:** Serves as the dependent variable in training the model. It represents the relative movement of a stock's price compared to the market, which is central to predicting future price movements effectively.
+Weighted Average Price (WAP): This is like an average price at which a stock trades, but it's "weighted" based on the number of shares traded at each price. If more shares are traded at a particular price, that price has more influence on the WAP.
+
+Synthetic Index: Think of this as a benchmark or reference point representing the overall market's movement.
+
+### **Quantitative Example:**
+
+**Step 1: Initial Conditions at 11:59:00 AM**
+
+- **Stock WAP (Weighted Average Price)**: The WAP for a particular stock at 11:59:00 AM is **$100.00**.
+- **Synthetic Index**: The WAP for a synthetic index, representing the overall market, at 11:59:00 AM is **$102.00**.
+
+**Step 2: Observations at 12:00:00 PM (60 Seconds Later)**
+
+- **Stock WAP**: At 12:00:00 PM, the WAP for the stock has increased to **$101.50**.
+- **Synthetic Index**: At 12:00:00 PM, the WAP for the synthetic index has increased to **$102.30**.
+
+**Step 3: Calculate the Movements**
+
+- **Stock WAP Movement**: 
+   - Initial WAP: $100.00
+   - Final WAP: $101.50
+   - **Movement**: $101.50 - $100.00 = **$1.50**
+
+- **Synthetic Index Movement**:
+   - Initial WAP: $102.00
+   - Final WAP: $102.30
+   - **Movement**: $102.30 - $102.00 = **$0.30**
+
+**Step 4: Calculate the Target Variable**
+
+- **Target Variable**: This is the difference between the stock's movement and the synthetic index's movement.
+   - **Target**: $1.50 (Stock Movement) - $0.30 (Index Movement) = **$1.20**
+
+### **Interpretation:**
+
+- **Positive Target ($1.20)**: In this example, the stock's price increased by $1.50 over the 60 seconds, while the market index only increased by $0.30. The target variable of $1.20 indicates that the stock outperformed the market by $1.20 in this short period.
+
+- **Usefulness**: This information tells a trader that, in this specific instance, the stock showed stronger growth than the general market, making it a potentially attractive buy if the trend is expected to continue.
+
+### **Effect of the Target Variable on Model Performance:**
+
+- The model is trained to predict this target variable. If it can accurately forecast whether a stock will outperform or underperform the market in the next 60 seconds, traders can use this information to make quick, informed decisions, such as buying, selling, or holding the stock.
+  
+- A positive target suggests a potential buying opportunity, while a negative target (had the stock moved less than the index) might indicate a selling opportunity.
+
+This target variable is crucial because it quantifies the stock's performance relative to the market, providing actionable insights for trading decisions.
 
 ### 5. Model Development
 ---
@@ -155,17 +201,82 @@ imbalance_size: This could represent the volume of shares that remain unmatched 
   
 - **Indicator of Market Sentiment:** A high imbalance_ratio might suggest a strong imbalance in buy or sell orders that could affect the stock price shortly, especially during the closing auction when liquidity and volatility are high.
 
-2. **imbl_size1**
+- **Formula:** Imbalance Ratio = Imbalance Size / Matched Size
+- **Imbalance Size:** The total volume of orders that haven't been matched (either buy or sell).
+- **Matched Size:** The total volume of orders that have been successfully matched.
+
+Example:
+- Imbalance Size: $500,000 (unmatched orders)
+- Matched Size: $1,000,000 (matched orders)
+- Imbalance Ratio: $500,000 / $1,000,000 = 0.5
+
+**Quantitative Interpretation:**
+
+- **What It Tells Us:** An imbalance ratio of 0.5 indicates that for every dollar's worth of orders that got matched, there’s 50 cents worth of unmatched orders. This suggests a significant supply-demand imbalance, which might lead to price changes as the market tries to match these orders.
+
+- **Impact on Prediction:** A higher imbalance ratio might suggest that the stock price could move sharply soon, as the market attempts to balance the excess demand or supply. If there's a large number of unmatched buy orders, for instance, the stock price may rise as buyers are willing to pay more to get their orders filled.
+
+2. **imbl_size1 (Normalized Difference Between Bid Size and Ask Size)**
 
 - **Definition:** The normalized difference between bid_size and ask_size.
 - **Formula:** (df['bid_size'] - df['ask_size']) / (df['bid_size'] + df['ask_size'])
 - **Purpose:** Captures the net order flow direction, indicating whether buying or selling pressure is dominant.
 
-3. **imbl_size2**
+**Effect on Accuracy:**
+
+- **Order Flow Direction:** This feature captures the net direction of order flow. A higher value suggests dominant buying pressure, while a lower value indicates selling pressure. This helps the model understand whether the market is more inclined towards buying or selling, which directly impacts price predictions.
+
+- **Enhanced Sensitivity:** By normalizing the difference between bid and ask sizes, the feature accounts for the relative strength of buy and sell orders, improving the model’s sensitivity to subtle shifts in market dynamics.
+
+- **Formula:** Imbl_size1 = (Bid Size - Ask Size) / (Bid Size + Ask Size)
+- **Bid Size:** The total volume of buy orders at the current bid price.
+- **Ask Size:** The total volume of sell orders at the current ask price.
+
+Example:
+- Bid Size: 10,000 shares
+- Ask Size: 8,000 shares
+- Imbl_size1: (10,000 - 8,000) / (10,000 + 8,000) = 2,000 / 18,000 ≈ 0.11
+
+**Quantitative Interpretation:**
+
+- **What It Tells Us:** An imbl_size1 of 0.11 indicates that there’s slightly more buying interest (bid size) than selling interest (ask size). This suggests that there might be upward pressure on the stock price because more people are looking to buy than sell.
+
+- **Impact on Prediction:** When the bid size is larger than the ask size, the stock price might increase as buyers are more eager to purchase, potentially driving up the price. Conversely, if imbl_size1 were negative, it would suggest more selling pressure, possibly leading to a price drop.
+
+3. **imbl_size2 (Normalized Difference Between Imbalance Size and Matched Size)**
 
 - **Definition:** The normalized difference between imbalance_size and matched_size.
 - **Formula:** (df['imbalance_size'] - df['matched_size']) / (df['imbalance_size'] + df['matched_size'])
 - **Purpose:** Similar to imbalance_ratio but focuses on the relative difference rather than the ratio, providing another perspective on market liquidity and order imbalance.
+
+**Effect on Accuracy:**
+
+- **Relative Liquidity and Imbalance:** This feature adds another layer of insight by focusing on the difference between unmatched orders (imbalance size) and those that can be matched (matched size). It highlights how much of the order book remains unresolved, which can be crucial in predicting price changes.
+
+- **Complementary Perspective:** While imbalance_ratio gives a ratio-based view, imbl_size2 provides a difference-based perspective, offering a complementary approach to understanding market liquidity and pressure. This dual perspective allows the model to capture a broader range of market conditions, leading to more accurate predictions.
+
+- **Formula: Imbl_size2** = (Imbalance Size - Matched Size) / (Imbalance Size + Matched Size)
+- **Imbalance Size:** Volume of unmatched orders.
+- **Matched Size:** Volume of matched orders.
+
+Example:
+- Imbalance Size: $500,000 (unmatched orders)
+- Matched Size: $1,000,000 (matched orders)
+- Imbl_size2: ($500,000 - $1,000,000) / ($500,000 + $1,000,000) = -$500,000 / $1,500,000 ≈ -0.33
+
+**Quantitative Interpretation:**
+
+- **What It Tells Us:** An imbl_size2 of -0.33 suggests that the matched orders significantly outweigh the unmatched ones. This might imply that the current market is effectively absorbing the available orders, leading to less price volatility.
+
+- **Impact on Prediction:** A negative imbl_size2 might indicate that the market is relatively stable, with sufficient liquidity to handle current orders without causing large price swings. On the other hand, a positive imbl_size2 would suggest more unmatched orders, indicating potential future price movements due to unresolved supply or demand.
+
+**Summary in Layman's Terms:**
+
+- **Imbalance Ratio:** Think of it like the number of customers waiting in line (unmatched orders) versus the number already served (matched orders). If too many are waiting, the price (ticket) might go up or down to clear the line quickly.
+
+- **Imbl_size1:** This tells you if more people are buying or selling right now. If more are buying, prices might go up; if more are selling, prices might drop.
+
+- **Imbl_size2:** This shows whether the market is calm or under pressure. If the market can handle the current buying and selling (matched orders are higher), prices are stable. If not (unmatched orders are higher), expect price swings.
 
 ### 7. Results and Discussion 🔍
 ---
